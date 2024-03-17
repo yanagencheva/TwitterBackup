@@ -1,0 +1,42 @@
+﻿@model TwitterBackup.Models.LocalDBUserDetailsViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit/Twitter User Details</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            @Html.Hidden("Id", Model.Id, new { @class = "form-control" })
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input type="file" asp-for="ImageFile">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-8">
+        @if (Model.Avatar != null)
+        {
+            @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Avatar) + "\" class=\"img-thumbnail\" style=\"width: 100px; height: 100px; margin-bottom: 20px;\" />")
+        }
+    </div>
+</div>

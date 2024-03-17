@@ -1,0 +1,19 @@
+{
+  "sidebarMenu": [
+    {
+      "controller": "TwitterUsers",
+      "action": "Index",
+      "text": "Browsing Twitter"
+    },
+    {
+      "controller": "LocalDBUsers",
+      "action": "Index",
+      "text": "Twitter Users added to Local DB"
+    },
+    {
+      "controller": "LocalDBTweets",
+      "action": "Index",
+      "text": "Tweets added to Local DB"
+    }
+  ]
+}

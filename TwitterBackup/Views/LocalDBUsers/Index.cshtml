@@ -1,0 +1,32 @@
+﻿@model TwitterBackup.Models.LocalDBUsersViewModel
+
+@{
+    ViewData["Title"] = "LocalDB Twitter Users";
+}
+
+<h2>Users added to Local DB</h2>
+
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">UserName</th>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => user.UserName)</td>
+                    <td>@Html.DisplayFor(model => user.Name)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

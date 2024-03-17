@@ -1,0 +1,54 @@
+﻿@model TwitterBackup.Models.BrowsingTwitterUsersViewModel
+
+@{
+    ViewData["Title"] = "Browsing Twitter Users";
+}
+
+<h2>Browsing Twitter Users</h2>
+
+<hr/>
+<div class="text-center">
+    <form asp-action="BrowseTwitterUsers">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="TwitterUserName" class="control-label"></label>
+            <input asp-for="TwitterUserName" class="form-control" />
+            <span asp-validation-for="TwitterUserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </form>
+    @if (Model.Results != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Local database actions</th>
+                    <th>Search user's most recent tweets</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Results)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(model => user.UserName)</td>
+                        <td>@Html.DisplayFor(model => user.Name)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-userName="@user.UserName">Add</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-link tweets-search" data-name="@(user.UserName)" href="#">Search</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<div id="tweet-results"></div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/tweets.js"></script>

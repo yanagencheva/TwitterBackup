@@ -1,0 +1,85 @@
+﻿@model TwitterBackup.Models.LocalDBTweetsViewModel
+
+@{
+    ViewData["Title"] = "LocalDB Tweets";
+}
+
+<h2>Tweets added to Local DB</h2>
+
+<hr />
+
+<h6>Filters</h6>
+
+<div class="text-center">
+    <form asp-action="Filter">
+        <div class="row">
+            <div class="col-6">
+                @Html.LabelFor(model => model.UserName)
+                @Html.TextBoxFor(model => model.UserName)
+            </div>
+            <div class="col-4">
+                @Html.LabelFor(model => model.Favourite)
+                @Html.CheckBoxFor(model => model.Favourite)
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-1">
+                <input type="submit" value="Filter" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="text-center mt-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Favourite</th>
+                <th scope="col">Date</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Text</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tweet in Model.Tweets)
+            {
+                <tr>
+                    <td>@Html.CheckBoxFor(model => tweet.Favourite, new { @disabled = "disabled" })</td>
+                    <td>@Html.DisplayFor(model => tweet.Date)</td>
+                    <td>@Html.DisplayFor(model => tweet.UserName)</td>
+                    <td>@Html.DisplayFor(model => tweet.Text)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@tweet.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@tweet.Id">Delete</a> |
+                        <a asp-action="RequestToken" asp-route-id="@tweet.BrowsingTweetId" data-ajax="true" data-ajax-success="RequestTokenSuccess">Retweet</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Authorize</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Enter PIN</p>
+                <input id="pin" />
+                <input id="oauthtoken" hidden />
+                <input id="tweetId" hidden />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Retweet()">Retweet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/tweets.js"></script>

@@ -1,0 +1,43 @@
+﻿@model TweetsViewModel
+
+@if (!Model.IsUserInclusedToLocalDB)
+{
+    <span>The User is not included to LocalDB and you are not able to add tweets.</span>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Tweet text</th>
+            <th scope="col">Local database actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tweet in Model.Results)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => tweet.Date, new { @id = "Date", @class = "form-control" })</td>
+                <td>@Html.DisplayFor(model => tweet.Text, new { @id = "Text", @class = "form-control" })</td>
+                <td>
+                    @if (Model.IsUserInclusedToLocalDB)
+                    {
+                        <form asp-action="Add" asp-controller="Tweets"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-success="AddTweetSuccess">
+                            @Html.Hidden("BrowsingTwitterUserName", tweet.BrowsingTwitterUserName, new { @class = "form-control" })
+                            @Html.Hidden("Text", tweet.Text, new { @class = "form-control" })
+                            @Html.Hidden("BrowsingTwitterName", tweet.BrowsingTwitterName, new { @class = "form-control" })
+                            @Html.Hidden("Favourite", tweet.Favourite, new { @class = "form-control" })
+                            @Html.Hidden("TweetId", tweet.TweetId, new { @class = "form-control" })
+                            @Html.Hidden("TwitterUserId", tweet.TwitterUserId, new { @class = "form-control" })
+                            @Html.Hidden("BrowsingTweetId", tweet.BrowsingTweetId, new { @class = "form-control" })
+                            @Html.Hidden("Date", tweet.Date, new { @class = "form-control" })
+                            <button type="submit" class="btn-sm btn-primary">Add</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
